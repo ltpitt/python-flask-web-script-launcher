@@ -1,0 +1,92 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+
+<h1>Vacation request</h1>
+
+<form>
+  <fieldset class="form-group">
+    <legend>Choose the request type</legend>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="hour" checked>
+        Hour(s)
+      </label>
+    </div>
+    <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="day">
+        Single day
+      </label>
+    </div>
+    <div class="form-check disabled">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="days">
+        Several days
+      </label>
+    </div>
+  </fieldset>
+  <div class="form-group" id="form-group-vacation-start-date">
+    <label for="vacation-start-date" aria-describedby="vacation-start-date-help" placeholder="Click here">Vacation start date</label>
+    {{ form.hidden_tag() }}
+    {{ form.dt(class="vacation-start-date-picker") }}
+    <small id="vacation-start-date-help" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group" id="form-group-vacation-end-date" hidden>
+    <label for="vacation-end-date" aria-describedby="vacation-end-date-help" placeholder="Click here">Vacation end date</label>
+    {{ form.hidden_tag() }}
+    {{ form.dt(class="vacation-end-date-picker") }}
+    <small id="vacation-end-date-help" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group" id="form-group-vacation-hour">
+    <label for="vacation-hour-number" aria-describedby="vacation-hour-number-help" placeholder="1">Total hours requested</label>
+    <input type='number' size='10' id='vacation-hour-number' name='vacation-hour-number' value='1' />
+    <small id="vacation-hour-number-help" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleTextarea">Notes</label>
+    <textarea class="form-control" id="vacation-notes" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputFile">Attach a file</label>
+    <input type="file" class="form-control-file" id="vacation-file-attachment" aria-describedby="vacation-file-attachment-help">
+    <small id="vacation-file-attachment-help" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+          <script>
+
+          $(function() {
+            $( ".vacation-start-date-picker" ).datepicker();
+            $( ".vacation-end-date-picker" ).datepicker();
+          });
+
+    $("input[id$='optionsRadios1']").click(function() {
+        console.log('Pressed hour');
+        $("#form-group-vacation-hour").fadeIn();
+        $("#form-group-vacation-end-date").fadeOut();
+    });
+
+    $("input[id$='optionsRadios2']").click(function() {
+        console.log('Pressed day');
+        $("#form-group-vacation-hour").fadeOut();
+        $("#form-group-vacation-end-date").fadeOut();
+    });
+
+    $("input[id$='optionsRadios3']").click(function() {
+        console.log('Pressed days');
+        $("#form-group-vacation-hour").fadeOut();
+        $("#form-group-vacation-start-date").fadeIn();
+        $("#form-group-vacation-end-date").fadeIn();
+    });
+
+
+          </script>
+
+{% endblock %}
